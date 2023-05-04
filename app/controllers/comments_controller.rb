@@ -19,25 +19,25 @@ class CommentsController < ApplicationController
     def create
         if params[:subreddit_id].present?
             @subreddit = Subreddit.find(params[:subreddit_id])
-            @comment = @subreddit.comments.create({
-                commenter: params[:commenter],
-                comment: params[:comment],
+            @comment = @subreddit.comments.build({
+                commenter: params[:comment][:commenter],
+                comment: params[:comment][:comment],
                 commentable_type: "Comment",
                 commentable_id: params[:subreddit_id],
             })
             @path = subreddit_path(@subreddit)
         elsif params[:comment_id].present?
             @parent_comment = Comment.find(params[:parent_comment])
-            @comment = @subreddit.comments.create({
-                commenter: params[:commenter],
-                comment: params[:comment],
+            @comment = @parent_comment.subcomments.build({
+                commenter: params[:comment][:commenter],
+                comment: params[:comment][:comment],
                 commentable_type: "Subcomment",
                 commentable_id: params[:comment_id],
             })
             @path = comment_path(@parent_comment)
         end
 
-        if comment.save
+        if @comment.save
             redirect_to @path
         else
             render :new

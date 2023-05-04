@@ -2,12 +2,12 @@
     Subreddit Index
 </h1>
 
-<%= link_to 'Create New Subreddit', new_subreddit_path %>
+<%= link_to 'Create New Subreddit', new_subreddit_path, class: "small text-decoration-none" %>
 
 <ol>
     <% for subreddit in @subreddits %>
         <li>
-            <%= link_to subreddit.title, subreddit %>
+            <%= link_to subreddit.title, subreddit, class: "text-decoration-none" %>
         </li>
     <% end %>
 </ol>
