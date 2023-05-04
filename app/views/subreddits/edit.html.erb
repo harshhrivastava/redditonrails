@@ -1,0 +1,11 @@
+<%= form_with model: @subreddit do |form| %>
+    
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+
+    <%= form.label :body, class: "form-label" %>
+    <%= form.text_area :body, class: "form-control" %>
+
+    <%= form.submit "Update Subreddit", class: "btn btn-primary" %>
+
+<% end %>

@@ -1,0 +1,13 @@
+<h1>
+    Subreddit Index
+</h1>
+
+<%= link_to 'Create New Subreddit', new_subreddit_path %>
+
+<ol>
+    <% for subreddit in @subreddits %>
+        <li>
+            <%= link_to subreddit.title, subreddit %>
+        </li>
+    <% end %>
+</ol>

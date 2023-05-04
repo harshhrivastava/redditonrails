@@ -1,0 +1,13 @@
+<%= @comment.commenter %>: <%= @comment.comment %>
+
+<% if @subcomments %>
+    <% for subcomment in @subcomments %>
+        <p><%= link_to subcomment.commenter + ": " + subcomment.comment, comment_path(subcomment) %></p><br>
+        <%= link_to 'Reply', new_comment_comment_path(subcomment), class: "small" %>
+        <%= link_to 'Edit', edit_comment_path(subcomment), class: "small" %>
+        <%= link_to 'Delete', comment_path(subcomment), class: "small", data: {
+            turbo_method: :delete,
+            turbo_confirm: "Are you sure?"
+        } %>
+    <% end %>
+<% end %>

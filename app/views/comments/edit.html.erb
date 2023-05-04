@@ -1,0 +1,11 @@
+<%= form_with model: @comment do |form| %>
+
+    <%= form.label :commenter, class: "form-label" %>
+    <%= form.text_field :commenter, class: "form-control disabled" %>
+
+    <%= form.label :comment, class: "form-label" %>
+    <%= form.text_area :comment, class: "form-control" %>
+
+    <%= form.submit "Create Comment", class: "btn btn-primary" %>
+
+<% end %>
