@@ -8,11 +8,11 @@ class CommentsController < ApplicationController
         if params[:subreddit_id].present?
             @subreddit = Subreddit.find(params[:subreddit_id])
             @comment = @subreddit.comments.build
-            @url = new_subreddit_comment_path(@subreddit)
+            @url = subreddit_comments_path(@subreddit)
         elsif params[:comment_id].present?
             @parent_comment = Comment.find(params[:comment_id])
             @comment = @parent_comment.subcomments.build
-            @url = new_comment_comment_path(@parent_comment)
+            @url = comment_comments_path(@parent_comment)
         end
     end
 

@@ -1,7 +1,7 @@
 class Comment < ApplicationRecord
     belongs_to :subreddit, inverse_of: :comments
     belongs_to :parent_comment, inverse_of: :subcomments
-    has_many :subcomments, as: :commentable, dependent: :destroy
+    has_many :subcomments, class_name: "Comment", as: :commentable, dependent: :destroy
 
     def path
         if parent_comment.present?
