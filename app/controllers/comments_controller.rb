@@ -2,7 +2,8 @@ class CommentsController < ApplicationController
     def show
         @comment = Comment.find(params[:id])
         @replies = @comment.comments
-        @comment_path = @comment.path
+
+        render :json => ({comment: @comment, replies: @replies, comment_path: @comment.path})
     end
 
     def new

@@ -2,10 +2,12 @@ class SubredditsController < ApplicationController
 
     def index
         @subreddits = Subreddit.all
+        render :json => ({subreddits: @subreddits})
     end
 
     def show
         @subreddit = Subreddit.find(params[:id])
+        render :json => ({subreddit: @subreddit, comments: @subreddit.comments})
     end
     
     def new
