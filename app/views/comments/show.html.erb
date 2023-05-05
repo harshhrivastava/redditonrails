@@ -1,3 +1,13 @@
+Path: 
+<% for ancestor in @comment_path %>
+    <% if ancestor[:comment][:type] == "Comment" %>
+        /<%= link_to ancestor[:comment][:id], comment_path(ancestor[:comment][:id]) %>
+    <% elsif ancestor[:comment][:type] == "Subreddit" %>
+        /<%= link_to ancestor[:comment][:id], subreddit_path(ancestor[:comment][:id]) %>
+    <% end %>
+<% end %>
+<br>
+
 <%= @comment.commenter %>: <%= @comment.comment %><br>
 
 <%= link_to 'Back', :back, class: "small text-decoration-none" %> |
@@ -7,8 +17,8 @@
 <br>
 <br>
 
-<% if @subcomments %>
-    <% for subcomment in @subcomments %>
+<% if @replies %>
+    <% for subcomment in @replies %>
         <p><%= link_to subcomment.commenter + ": " + subcomment.comment, comment_path(subcomment), class: "text-decoration-none" %><br>
         <%= link_to 'Reply', new_comment_comment_path(subcomment), class: "small text-decoration-none" %> | 
         <%= link_to 'Edit', edit_comment_path(subcomment), class: "small text-decoration-none" %> | 

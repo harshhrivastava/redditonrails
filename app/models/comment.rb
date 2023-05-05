@@ -1,13 +1,17 @@
 class Comment < ApplicationRecord
-    belongs_to :subreddit, class_name: "Subreddit"
-    belongs_to :parent_comment, class_name: "Comment"
-    has_many :subcomments, class_name: "Comment", as: :commentable, dependent: :destroy
+    belongs_to :commentable, polymorphic: true
+    has_many :comments, as: :commentable
 
     def path
-        if parent_comment.present?
-            [id].unshift(parent_comment.path).flatten
+        if commentable_type == "Comment"
+            parent_comment = Comment.find(commentable_id)
+            path_array = [Hash.new(id: id, comment: comment, type: "Comment")]
+            path_array.unshift(parent_comment.path).flatten
         else
-            [id]
+            path_array = [Hash.new(id: id, comment: comment, type: "Comment")]
+            subreddit = Subreddit.find(commentable_id)
+            parent_subreddit = [Hash.new(id: subreddit[:id], comment: subreddit[:title], type: "Subreddit")]
+            path_array.unshift(parent_subreddit).flatten
         end
     end
 end
