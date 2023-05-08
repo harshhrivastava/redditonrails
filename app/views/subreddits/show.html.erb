@@ -6,12 +6,15 @@
     <%= @subreddit.body %>
 </p>
 
-<%= link_to 'Back', :back, class: "small text-decoration-none" %> |
-<%= link_to 'Edit', edit_subreddit_path(@subreddit), class: "small text-decoration-none" %> |
-<%= link_to 'Create New Comment', new_subreddit_comment_path(@subreddit), class: "small text-decoration-none" %>
-
-<br>
-<br>
+<p>
+    <%= link_to 'Back', :back, class: "small text-decoration-none" %> |
+    <%= link_to 'Reply', new_subreddit_comment_path(@subreddit), class: "small text-decoration-none" %> |
+    <%= link_to 'Edit', edit_subreddit_path(@subreddit), class: "small text-decoration-none" %> |
+    <%= link_to 'Delete', subreddit_path(@subreddit), class: "small text-decoration-none", data: {
+        turbo_method: :delete,
+        turbo_confirm: "Are you sure?"
+    } %>
+</p>
 
 <% for comment in @subreddit.comments %>
     <p><%= link_to comment.commenter + ": " + comment.comment, comment_path(comment), class: "text-decoration-none" %><br>

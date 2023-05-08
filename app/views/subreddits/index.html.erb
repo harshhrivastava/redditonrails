@@ -7,7 +7,12 @@
 <ol>
     <% for subreddit in @subreddits %>
         <li>
-            <%= link_to subreddit.title, subreddit, class: "text-decoration-none" %>
+            <h3><%= link_to subreddit.title, subreddit, class: "text-decoration-none" %></h3>
+            <p><%= link_to 'Edit', edit_subreddit_path(subreddit), class: "small text-decoration-none" %> |
+            <%= link_to 'Delete', subreddit_path(subreddit), class: "small text-decoration-none", data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure?"
+            } %></p>
         </li>
     <% end %>
 </ol>

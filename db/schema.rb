@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_022502) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_08_071835) do
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "comment"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_022502) do
     t.integer "commentable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "replies_count", default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
   end
 
@@ -26,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_022502) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "replies_count", default: 0
   end
 
 end

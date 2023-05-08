@@ -1,18 +1,22 @@
-Path: 
-<% for ancestor in @comment_path %>
-    <% if ancestor[:comment][:type] == "Comment" %>
-        /<%= link_to ancestor[:comment][:id], comment_path(ancestor[:comment][:id]) %>
-    <% elsif ancestor[:comment][:type] == "Subreddit" %>
-        /<%= link_to ancestor[:comment][:id], subreddit_path(ancestor[:comment][:id]) %>
+<p>
+    Path:
+    /<%= link_to "home", root_path, class: "small text-decoration-none" %>
+    /<%= link_to @comment_path[0][:id], subreddit_path(@comment_path[0][:id]), class: "small text-decoration-none" %>
+    <% if @comment_path[1..-1] %>
+        <% for ancestor in @comment_path[1..-1] %>
+            <% if ancestor[:commentable_type] == "Comment" %>
+                /<%= link_to ancestor[:commentable_id], comment_path(ancestor[:commentable_id]), class: "small text-decoration-none" %>
+            <% end %>
+        <% end %>
     <% end %>
-<% end %>
-<br>
+</p>
 
-<%= @comment.commenter %>: <%= @comment.comment %><br>
+<h1><%= @comment.commenter %>:</h1>
+<h3><%= @comment.comment %></h3><br>
 
 <%= link_to 'Back', :back, class: "small text-decoration-none" %> |
 <%= link_to 'Edit', edit_comment_path(@comment), class: "small text-decoration-none" %> |
-<%= link_to 'Create New Subcomment', new_comment_comment_path(@comment), class: "small text-decoration-none" %>
+<%= link_to 'Reply', new_comment_comment_path(@comment), class: "small text-decoration-none" %>
 
 <br>
 <br>
