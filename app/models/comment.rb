@@ -40,28 +40,4 @@ class Comment < ApplicationRecord
 
     end
 
-    def comments_before_comment(main_comment)
-
-        before_time = main_comment.created_at
-
-        commentable_id = main_comment.commentable_id
-
-        id = main_comment.id
-
-        before_comments = Comment.where("(created_at < ? or created_at = ?) and commentable_id = ? and id <> ?", before_time, before_time, commentable_id, id)[0..9]
-
-    end
-
-    def comments_after_comment(main_comment)
-
-        after_time = main_comment.created_at
-
-        commentable_id = main_comment.commentable_id
-
-        id = main_comment.id
-
-        before_comments = Comment.where("(created_at > ? or created_at = ?) and commentable_id = ? and id <> ?", after_time, after_time, commentable_id, id)[0..9]
-        
-    end
-
 end

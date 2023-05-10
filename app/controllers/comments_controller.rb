@@ -2,15 +2,69 @@ class CommentsController < ApplicationController
 
     def show
 
-        @comment = Comment.find(params[:id])
+        # What we need to return => :comment(done), :replies(done), :other_comments(done), :page_number, :total_pages, :id, :path
+        # From comment_page_path => :comment_id, :page
+        # From comment_path => :id
 
-        @replies = @comment.comments
+        if params[:comment_id]
 
-        @sibling_comments = {before: @comment.comments_before_comment(@comment), after: @comment.comments_after_comment(@comment)}
+            # If someone opens comment using subreddit page
 
-        # @comment_path = @comment.path
+            @comment = Comment.find(params[:comment_id])
 
-        render :json => ({comment: @comment, replies: @replies, comment_path: @comment.path[0..-2], siblings: @sibling_comments})
+            @page_number = params[:page].to_i
+
+            @id = params[:comment_id]
+
+        elsif params[:id]
+
+            # If someone calls directly using id
+
+            @comment = Comment.find(params[:id])
+
+            @id = params[:id]
+
+        end
+
+        @replies = Comment.where({commentable_id: @comment[:id], commentable_type: "Comment"})
+
+        if @comment[:commentable_type] == "Subreddit"
+
+            @parent_object = Subreddit.find(@comment[:commentable_id])
+
+        elsif @comment[:commentable_type] == "Comment"
+
+            @parent_object = Comment.find(@comment[:commentable_id])
+
+        end
+
+        all_other_comments = @parent_object.comments
+
+        unless params[:page].present?
+        
+            index = all_other_comments.find_index(@comment)
+
+            @page_number = index / 5
+
+        end
+
+        start_index = @page_number * 5
+
+        end_index = start_index + 4
+
+        @other_comments = all_other_comments[start_index..end_index]
+
+        @total_pages = all_other_comments.size / 5
+
+        if @page_number > @total_pages
+
+            render :json => ({error: ["Index out of bound. Last index is " + @total_pages.to_s]})
+
+        else
+
+            render :json => ({comment: @comment, id: @id, replies: @replies, comment_path: @comment.path[0..-2], other_comments: @other_comments, page_number: @page_number + 1, total_pages: @total_pages + 1})
+
+        end
 
     end
 

@@ -1,8 +1,26 @@
 <h1>
-    Subreddit Index
+    Index
 </h1>
 
-<%= link_to 'Create New Subreddit', new_subreddit_path, class: "small text-decoration-none" %>
+<%= link_to 'Create New Subreddit', new_subreddit_path, class: "small text-decoration-none" %><br>
+
+<p class="small text-decoration-none">
+    <% if @page_number > 0 %>
+        <%= link_to 'Previous', page_path(@page_number - 1) %>
+    <% else %>
+        Previous
+    <% end %> | 
+
+    Page: <%= @page_number + 1 %> of <%= @total_pages + 1 %> | 
+
+    <% if @page_number != @total_pages %>
+        <%= link_to 'Next', page_path(@page_number + 1) %>
+    <% else %>
+        Next
+    <% end %>
+</p>
+
+<br>
 
 <ol>
     <% for subreddit in @subreddits %>

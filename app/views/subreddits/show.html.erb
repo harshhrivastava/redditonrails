@@ -16,8 +16,28 @@
     } %>
 </p>
 
-<% for comment in @subreddit.comments %>
-    <p><%= link_to comment.commenter + ": " + comment.comment, comment_path(comment), class: "text-decoration-none" %><br>
+<br>
+
+<p class="small text-decoration-none">
+    <% if @page_number != 0 %>
+        <%= link_to 'Previous', subreddit_page_path(page: @page_number - 1, subreddit_id: @id) %>
+    <% else %>
+        Previous
+    <% end %> | 
+
+    Page: <%= @page_number + 1 %> of <%= @total_pages + 1 %> | 
+
+    <% if @page_number != @total_pages %>
+        <%= link_to 'Next', subreddit_page_path(page: @page_number + 1, subreddit_id: @id) %>
+    <% else %>
+        Next
+    <% end %>
+</p>
+
+<br>
+
+<% for comment in @comments %>
+    <p><%= link_to comment.commenter + ": " + comment.comment, comment_page_path(comment_id: comment[:id], page: 0), class: "text-decoration-none" %><br>
     <%= link_to 'Reply', new_comment_comment_path(comment), class: "small text-decoration-none" %> | 
     <%= link_to 'Edit', edit_comment_path(comment), class: "small text-decoration-none" %> | 
     <%= link_to 'Delete', comment_path(comment), class: "small text-decoration-none", data: {
