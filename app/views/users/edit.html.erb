@@ -1,0 +1,16 @@
+<h1>Edit Profile</h1>
+
+<%= form_with model: [@user] do |form| %>
+
+    <%= form.label :fname, "First Name" %>
+    <%= form.input_field :fname, placeholder: "Enter Your First Name" %>
+
+    <%= form.label :lname, "Last Name" %>
+    <%= form.input_field :lname, placeholder: "Enter Your Last Name" %>
+
+    <%= form.label :email, "Email" %>
+    <%= form.input_field :fname, placeholder: "Enter Your Email Address", readonly: true %>
+
+    <%= form.submit "Create New User", disable_with: 'Creating...' %>
+
+<% end %>

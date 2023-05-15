@@ -3,7 +3,7 @@
 <%= form_with model: [@parent_object, @comment], local: true do |form| %>
 
   <%= form.label :commenter, class: "form-label" %>
-  <%= form.text_field :commenter, class: "form-control" %>
+  <%= form.text_field :commenter, class: "form-control", value: @commenter, readonly: true %>
 
   <%= form.label :comment, class: "form-label" %>
   <%= form.text_area :comment, class: "form-control" %>

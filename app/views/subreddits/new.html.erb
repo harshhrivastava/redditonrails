@@ -1,10 +1,14 @@
 <%= form_with model: @subreddit do |form| %>
+
+    <%= form.hidden_field :author, value: @author, readonly: true %>
     
     <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "form-control" %>
 
     <%= form.label :body, class: "form-label" %>
     <%= form.text_area :body, class: "form-control" %>
+
+    <%= form.hidden_field :user_id, value: @user_id %>
 
     <%= form.submit "Create Subreddit", class: "btn btn-primary" %>
 

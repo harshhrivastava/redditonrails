@@ -25,12 +25,17 @@
 <ol>
     <% for subreddit in @subreddits %>
         <li>
-            <h3><%= link_to subreddit.title, subreddit, class: "text-decoration-none" %></h3>
-            <p><%= link_to 'Edit', edit_subreddit_path(subreddit), class: "small text-decoration-none" %> |
-            <%= link_to 'Delete', subreddit_path(subreddit), class: "small text-decoration-none", data: {
-                turbo_method: :delete,
-                turbo_confirm: "Are you sure?"
-            } %></p>
+            <span class="h3"><%= link_to subreddit.title, subreddit, class: "text-decoration-none" %></span>
+            <span class="small fst-italics">By <%= subreddit.author %></span>
+
+            <% if @user_id && subreddit[:user_id] == @user_id %>
+                <p><%= link_to 'Edit', edit_subreddit_path(subreddit), class: "small text-decoration-none" %> |
+                <%= link_to 'Delete', subreddit_path(subreddit), class: "small text-decoration-none", data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                } %></p>
+            <% end %>
+            
         </li>
     <% end %>
 </ol>

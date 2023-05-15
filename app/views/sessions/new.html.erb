@@ -1,0 +1,13 @@
+<h1>Sign In</h1>
+
+<%= form_with do |form| %>
+
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+
+    <%= form.label :password, "Create Password" %>
+    <%= form.password_field :password, class: "form-control" %>
+
+    <%= form.submit "Sign In" %>
+
+<% end %>

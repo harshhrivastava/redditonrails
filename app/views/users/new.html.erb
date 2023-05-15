@@ -1,0 +1,22 @@
+<h1>Sign Up</h1>
+
+<%= form_with model: @user, path: signup_path do |form| %>
+
+    <%= form.label :fname, "First Name" %>
+    <%= form.text_field :fname, class: "form-control" %>
+
+    <%= form.label :lname, "Last Name" %>
+    <%= form.text_field :lname, class: "form-control" %>
+
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+
+    <%= form.label :password, "Create Password" %>
+    <%= form.password_field :password, class: "form-control" %>
+
+    <%= form.label :password_confirmation, "Confirm Password" %>
+    <%= form.password_field :password_confirmation, class: "form-control" %>
+
+    <%= form.submit "Create New User" %>
+
+<% end %>

@@ -1,14 +1,12 @@
 class CommentsController < ApplicationController
 
+    before_action :authenticate_user!, except: [:index, :show]
+
+    before_action :refresh
+
     def show
 
-        # What we need to return => :comment(done), :replies(done), :other_comments(done), :page_number, :total_pages, :id, :path
-        # From comment_page_path => :comment_id, :page
-        # From comment_path => :id
-
         if params[:comment_id]
-
-            # If someone opens comment using subreddit page
 
             @comment = Comment.find(params[:comment_id])
 
@@ -17,8 +15,6 @@ class CommentsController < ApplicationController
             @id = params[:comment_id]
 
         elsif params[:id]
-
-            # If someone calls directly using id
 
             @comment = Comment.find(params[:id])
 
@@ -82,6 +78,8 @@ class CommentsController < ApplicationController
 
         @comment = @parent_object.comments.build
 
+        @commenter = current_user[:fname]
+
     end
 
     def create
@@ -101,6 +99,8 @@ class CommentsController < ApplicationController
         end
         
         @comment = @parent_object.comments.new(get_comment_attributes)
+
+        @comment[:user_id] = current_user[:id]
         
         if @comment.save
 
